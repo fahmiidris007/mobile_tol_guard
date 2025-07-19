@@ -11,6 +11,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this._login) : super(AuthInitial());
   final Login _login;
 
+// example cubit if connect to backend service
   login({required String email, required String password}) async {
     try {
       var params = LoginParams(

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mobile_tol_guard/app/domain/entities/user.dart';
+
 LoginModel loginModelFromJson(String str) =>
     LoginModel.fromJson(json.decode(str));
 
@@ -18,26 +20,6 @@ class LoginModel {
 
   Map<String, dynamic> toJson() => {
         "user": user?.toJson(),
-      };
-}
-
-class User {
-  String? name;
-  String? role;
-
-  User({
-    this.name,
-    this.role,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        name: json["name"],
-        role: json["role"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "role": role,
       };
 }
 
