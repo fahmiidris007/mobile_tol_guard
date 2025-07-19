@@ -9,6 +9,7 @@ environment:
 # use flutter version : 3.27.3
 
 dependencies:
+  bloc: ^9.0.0
   camera: ^0.11.2
   convert: ^3.1.2
   dartz: ^0.10.1
@@ -29,6 +30,7 @@ dependencies:
   intl_utils: ^2.8.11
   navigation_history_observer: ^1.1.1
   package_info_plus: ^8.3.0
+  path: ^1.9.0
   permission_handler: ^12.0.1
   pointycastle: ^3.9.1
   pretty_json: ^2.0.0
