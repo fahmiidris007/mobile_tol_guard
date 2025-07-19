@@ -3,17 +3,47 @@ description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0
 
+
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
+# use flutter version : 3.27.3
 
 dependencies:
+  camera: ^0.11.2
+  convert: ^3.1.2
+  dartz: ^0.10.1
+  device_info_plus: ^11.3.0
+  dio: ^5.8.0+1
+  encrypt: ^5.0.3
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
+  flutter_localizations:
+    sdk: flutter
+  get: ^4.7.2
+  get_it: ^8.0.3
+  image: ^4.5.4
+  injectable: ^2.5.0
+  injectable_generator: ^2.7.0
+  intl: ^0.19.0
+  intl_utils: ^2.8.11
+  navigation_history_observer: ^1.1.1
+  package_info_plus: ^8.3.0
+  permission_handler: ^12.0.1
+  pointycastle: ^3.9.1
+  pretty_json: ^2.0.0
+  shared_preferences: ^2.5.3
+  sqflite: ^2.4.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.15
 
 flutter:
   uses-material-design: true
+flutter_intl:
+  enabled: true
+  output_dir: lib/core/translator
+  arb_dir: lib/core/translator/arb
