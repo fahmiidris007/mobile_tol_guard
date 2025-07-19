@@ -6,25 +6,17 @@ LoginModel loginModelFromJson(String str) =>
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
-  String? email;
-  String? password;
   User? user;
 
   LoginModel({
-    this.email,
-    this.password,
     this.user,
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-        email: json["email"],
-        password: json["password"],
         user: json["user"] == null ? null : User.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "email": email,
-        "password": password,
         "user": user?.toJson(),
       };
 }
