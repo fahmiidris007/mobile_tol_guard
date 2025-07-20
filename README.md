@@ -10,6 +10,7 @@
 
 ## Project Structure
 
+```
 mobile_tol_guard/
 ├── lib/
 │ ├── app/                      --> Application Layer
@@ -39,6 +40,7 @@ mobile_tol_guard/
 ├── assets/                     --> Static assets
 ├── fonts/                      --> Custom fonts
 └── pubspec.yaml                --> Dependencies configuration
+```
 
 ## Architecture Overview
 
