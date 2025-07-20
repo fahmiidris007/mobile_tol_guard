@@ -75,11 +75,11 @@ The project uses **GetIt** and **Injectable** for dependency injection:
 ### Translator
 
     Translator use .arb file in core/translator/arb, after edit using plugin "i18n arb editor",
-    the translator will be generate automaticly from plugin "Flutter Intl".
-    These plugin you can download on VS Code. After download these plugin, you can edit translator 
-    by right click in core/translator/arb folder then click "i18n arb editor" to show page translator, 
-    after page translator showed you can add new item and click save. If plugin not generated after save, 
-    you should save manually (Ctrl + S) on core/translator/arb/int_en.arb file.
+    the translator will be generate automaticly from plugin "Flutter Intl". These plugin you 
+    can download on VS Code. After download these plugin, you can edit translator by right click
+    in core/translator/arb folder then click "i18n arb editor" to show page translator, after 
+    page translator showed you can add new item and click save. If plugin not generated after 
+    save, you should save manually (Ctrl + S) on core/translator/arb/int_en.arb file.
 
 ##### i18n arb editor 
 
@@ -91,9 +91,10 @@ The project uses **GetIt** and **Injectable** for dependency injection:
 
 ### Asset Images
 
-    Image save in assets folder will be generate automatic in core/util/assets.dart file, in that file dont edit manually, 
-    but you can use plugin "Flutter Assets Gen" from VSCode. After donwload plugin, you can add assets image in assets/images,
-    after that "Ctrl+Shift+P" to show option on VSCode then select "Flutter Assets : Generate" to generate path image 
+    Image save in assets folder will be generate automatic in core/util/assets.dart file, 
+    in that file dont edit manually, but you can use plugin "Flutter Assets Gen" from VSCode. 
+    After donwload plugin, you can add assets image in assets/images, after that "Ctrl+Shift+P" 
+    to show option on VSCode then select "Flutter Assets : Generate" to generate path image 
     on core/util/assets.dart file
 
 ##### Flutter Assets Gen 
@@ -102,7 +103,10 @@ The project uses **GetIt** and **Injectable** for dependency injection:
 
 ### Build runner
 
-    This project using build_runner for automatic dependency registration, after you create feature with impelements injectable **@lazySingleton** in usecase (lib/app/domain/use_cases), domain repositories (lib/app/domain/repositories), data repositories (lib/app/data/repositories) and service datasource (lib/app/data/data_sources), you can run this command in terminal 
+    This project using build_runner for automatic dependency registration, after you create 
+    feature with impelements injectable **@lazySingleton** in usecase (lib/app/domain/use_cases), 
+    domain repositories (lib/app/domain/repositories), data repositories (lib/app/data/repositories)
+    and service datasource (lib/app/data/data_sources), you can run this command in terminal 
 
 ```dart    
 flutter pub run build_runner build --delete-conflicting-outputs
