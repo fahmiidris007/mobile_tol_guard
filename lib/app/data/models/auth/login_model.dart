@@ -24,16 +24,16 @@ class LoginModel {
 }
 
 class LoginParams {
-  final String email;
+  final String username;
   final String password;
 
   LoginParams({
-    required this.email,
+    required this.username,
     required this.password,
   });
 
   Future<Map<String, dynamic>> toJson() async => {
-        "email": email,
+        "email": username,
         "password": password,
       };
 }

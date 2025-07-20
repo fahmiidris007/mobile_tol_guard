@@ -1,4 +1,9 @@
 {
+  "home": "Home",
   "internalServerError": "InternalServerError",
-  "problemConnection": "Problem Connection"
+  "login": "Login",
+  "password": "Password",
+  "problemConnection": "Problem Connection",
+  "settings": "Settings",
+  "username": "Username"
 }
