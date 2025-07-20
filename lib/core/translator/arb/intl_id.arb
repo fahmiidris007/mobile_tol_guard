@@ -1,4 +1,9 @@
 {
+  "home": "Home",
   "internalServerError": "Terjadi Kesalahan pada Internal Aplikasi",
-  "problemConnection": "Koneksi Internet Bermasalah"
+  "login": "Masuk",
+  "password": "Kata Sandi",
+  "problemConnection": "Koneksi Internet Bermasalah",
+  "settings": "Pengaturan",
+  "username": "Nama Pengguna"
 }

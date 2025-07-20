@@ -45,7 +45,7 @@ class DatabaseHelper {
             id INTEGER PRIMARY KEY,
             userId TEXT,
             username TEXT,
-            password TEXT,
+            password TEXT
           )
           ''',
     );

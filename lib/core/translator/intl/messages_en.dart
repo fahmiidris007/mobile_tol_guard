@@ -22,11 +22,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "home": MessageLookupByLibrary.simpleMessage("Home"),
     "internalServerError": MessageLookupByLibrary.simpleMessage(
       "InternalServerError",
     ),
+    "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "password": MessageLookupByLibrary.simpleMessage("Password"),
     "problemConnection": MessageLookupByLibrary.simpleMessage(
       "Problem Connection",
     ),
+    "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+    "username": MessageLookupByLibrary.simpleMessage("Username"),
   };
 }

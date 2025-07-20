@@ -55,6 +55,11 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Home`
+  String get home {
+    return Intl.message('Home', name: 'home', desc: '', args: []);
+  }
+
   /// `InternalServerError`
   String get internalServerError {
     return Intl.message(
@@ -65,6 +70,16 @@ class S {
     );
   }
 
+  /// `Login`
+  String get login {
+    return Intl.message('Login', name: 'login', desc: '', args: []);
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message('Password', name: 'password', desc: '', args: []);
+  }
+
   /// `Problem Connection`
   String get problemConnection {
     return Intl.message(
@@ -73,6 +88,16 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message('Settings', name: 'settings', desc: '', args: []);
+  }
+
+  /// `Username`
+  String get username {
+    return Intl.message('Username', name: 'username', desc: '', args: []);
   }
 }
 
