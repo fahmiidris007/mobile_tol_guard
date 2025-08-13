@@ -27,7 +27,7 @@ dependencies:
   image: ^4.5.4
   injectable: ^2.5.0
   injectable_generator: ^2.7.0
-  intl: ^0.19.0
+  intl: ^0.20.0
   intl_utils: ^2.8.11
   navigation_history_observer: ^1.1.1
   package_info_plus: ^8.3.0
