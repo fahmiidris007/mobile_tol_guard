@@ -24,4 +24,7 @@ class Constant {
   // Login
   /// TODO : add this path api if backend service is already
   static String login = '';
+
+  // maps
+  static String googleMapApiKey = 'AIzaSyBBfbPrw-iYf-ix8Gapj6k4LuDwz4eHrRY';
 }
