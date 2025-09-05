@@ -42,4 +42,9 @@ class AddPlaceCubit extends Cubit<AddPlaceState> {
       emit(AddLocationErrorState(e.toString()));
     }
   }
+
+  void reset() {
+    imageFile = null;
+    imagePath = null;
+  }
 }

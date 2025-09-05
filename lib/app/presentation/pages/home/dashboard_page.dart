@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_tol_guard/app/domain/entities/constant.dart';
 import 'package:mobile_tol_guard/app/presentation/pages/add_place/add_place_page.dart';
@@ -7,6 +9,7 @@ import 'package:mobile_tol_guard/core/static_data/static_data.dart';
 import 'package:mobile_tol_guard/core/util/app_theme.dart';
 import 'package:mobile_tol_guard/core/util/navigation.dart';
 
+import '../../../../core/util/utility.dart';
 import '../../../domain/entities/map_item_data.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -58,11 +61,10 @@ class _DashboardPageState extends State<DashboardPage> {
                     spacing: 10,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        e.imageUrl,
+                      SizedBox(
                         width: 150,
                         height: 100,
-                        fit: BoxFit.fill,
+                        child: Utility.buildImage(e.imageUrl),
                       ),
                       Expanded(
                         child: Column(
@@ -100,7 +102,16 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget floatingActionButton() {
     return FloatingActionButton(
-      onPressed: () => navigateTo(AddPlacePage()),
+      onPressed: () async {
+        final result = await navigateTo(AddPlacePage());
+        log('MASUK SINI RESULT $result');
+        if (result == true) {
+          // temporary update data, change if backend api is ready
+          setState(() {
+            streetEvent = StaticData.streetEvent;
+          });
+        }
+      },
       child: Icon(Icons.add),
     );
   }

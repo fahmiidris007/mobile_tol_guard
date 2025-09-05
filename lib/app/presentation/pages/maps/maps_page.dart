@@ -4,6 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mobile_tol_guard/app/domain/entities/map_item_data.dart';
 import 'package:mobile_tol_guard/core/static_data/static_data.dart';
+import 'package:mobile_tol_guard/core/util/navigation.dart';
+import 'package:mobile_tol_guard/core/util/utility.dart';
 
 class MapsPage extends StatefulWidget {
   final MapItemData? firstPlace;
@@ -80,140 +82,152 @@ class _MapsPageState extends State<MapsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        children: [
-          GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: pinnedPlace.latLng,
-              zoom: 15,
+    return WillPopScope(
+      onWillPop: () {
+        navigatePop(true);
+        return Future.value(true);
+      },
+      child: Center(
+        child: Stack(
+          children: [
+            GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: pinnedPlace.latLng,
+                zoom: 15,
+              ),
+              onMapCreated: (controller) async {
+                final info = await geo.placemarkFromCoordinates(
+                    pinnedPlace.latLng.latitude, pinnedPlace.latLng.longitude);
+                final place = info[0];
+                final street = place.street!;
+                final address =
+                    '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+                setState(() {
+                  placemark = place;
+                });
+                defineMarker(
+                    latLng: pinnedPlace.latLng,
+                    street: street,
+                    address: address);
+                setState(() {
+                  mapController = controller;
+                });
+                final bound = boundsFromLatLngList(
+                    [pinnedPlace.latLng, ...streetEvent.map((e) => e.latLng)]);
+                mapController
+                    .animateCamera(CameraUpdate.newLatLngBounds(bound, 50));
+              },
+              markers: {...markers, ...tempMarkers},
+              myLocationButtonEnabled: false,
+              zoomControlsEnabled: false,
+              mapToolbarEnabled: false,
+              mapType: selectedMapType,
+              myLocationEnabled: true,
+              onTap: (LatLng latLng) {
+                onTapMaps(latLng);
+              },
             ),
-            onMapCreated: (controller) async {
-              final info = await geo.placemarkFromCoordinates(
-                  pinnedPlace.latLng.latitude, pinnedPlace.latLng.longitude);
-              final place = info[0];
-              final street = place.street!;
-              final address =
-                  '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
-              setState(() {
-                placemark = place;
-              });
-              defineMarker(
-                  latLng: pinnedPlace.latLng, street: street, address: address);
-              setState(() {
-                mapController = controller;
-              });
-              final bound = boundsFromLatLngList(
-                  [pinnedPlace.latLng, ...streetEvent.map((e) => e.latLng)]);
-              mapController
-                  .animateCamera(CameraUpdate.newLatLngBounds(bound, 50));
-            },
-            markers: {...markers, ...tempMarkers},
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            mapToolbarEnabled: false,
-            mapType: selectedMapType,
-            myLocationEnabled: true,
-            onTap: (LatLng latLng) {
-              onTapMaps(latLng);
-            },
-          ),
-          Positioned(
-              bottom: 150,
-              right: 20,
-              child: Column(
-                children: [
-                  FloatingActionButton.small(
-                    heroTag: 'mapsPageMyLocationButton',
-                    onPressed: () {
-                      onMyLocationButtonPressed();
-                    },
-                    child: Icon(Icons.my_location),
-                  ),
-                  // FloatingActionButton.small(
-                  //   onPressed: () {
-                  //     mapController.animateCamera(CameraUpdate.zoomIn());
-                  //   },
-                  //   heroTag: 'zoom-in',
-                  //   child: const Icon(Icons.add),
-                  // ),
-                  // FloatingActionButton.small(
-                  //   onPressed: () {
-                  //     mapController.animateCamera(CameraUpdate.zoomOut());
-                  //   },
-                  //   heroTag: 'zoom-out',
-                  //   child: const Icon(Icons.remove),
-                  // )
-                ],
-              )),
-          Positioned(
-              top: 20,
-              right: 20,
-              child: FloatingActionButton.small(
-                heroTag: 'mapsPageLayersButton',
-                onPressed: () {},
-                child: PopupMenuButton(
-                  icon: Icon(Icons.layers_outlined),
-                  itemBuilder: (BuildContext context) => [
-                    PopupMenuItem(value: MapType.normal, child: Text('Normal')),
-                    PopupMenuItem(
-                        value: MapType.terrain, child: Text('Terrain')),
-                    PopupMenuItem(
-                        value: MapType.satellite, child: Text('Satellite')),
-                    PopupMenuItem(value: MapType.hybrid, child: Text('Hybrid')),
-                  ],
-                  onSelected: (MapType mapType) {
-                    setState(() {
-                      selectedMapType = mapType;
-                    });
-                  },
-                ),
-              )),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 10,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  spacing: 12,
-                  children: streetEvent.map((e) {
-                    e.pinned = e.id == pinnedPlace.id;
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          pinnedPlace = e;
-                          e.pinned = true;
-                          mapController.animateCamera(
-                              CameraUpdate.newLatLngZoom(e.latLng, 15));
-                        });
+            Positioned(
+                bottom: 150,
+                right: 20,
+                child: Column(
+                  children: [
+                    FloatingActionButton.small(
+                      heroTag: 'mapsPageMyLocationButton',
+                      onPressed: () {
+                        onMyLocationButtonPressed();
                       },
-                      child: Container(
-                        width: e.pinned ? 150 : 100,
-                        height: e.pinned ? 100 : 80,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: e.pinned
-                              ? Border.all(
-                                  color: Colors.blue,
-                                  width: 1,
-                                )
-                              : null,
+                      child: Icon(Icons.my_location),
+                    ),
+                    // FloatingActionButton.small(
+                    //   onPressed: () {
+                    //     mapController.animateCamera(CameraUpdate.zoomIn());
+                    //   },
+                    //   heroTag: 'zoom-in',
+                    //   child: const Icon(Icons.add),
+                    // ),
+                    // FloatingActionButton.small(
+                    //   onPressed: () {
+                    //     mapController.animateCamera(CameraUpdate.zoomOut());
+                    //   },
+                    //   heroTag: 'zoom-out',
+                    //   child: const Icon(Icons.remove),
+                    // )
+                  ],
+                )),
+            Positioned(
+                top: 20,
+                right: 20,
+                child: FloatingActionButton.small(
+                  heroTag: 'mapsPageLayersButton',
+                  onPressed: () {},
+                  child: PopupMenuButton(
+                    icon: Icon(Icons.layers_outlined),
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                          value: MapType.normal, child: Text('Normal')),
+                      PopupMenuItem(
+                          value: MapType.terrain, child: Text('Terrain')),
+                      PopupMenuItem(
+                          value: MapType.satellite, child: Text('Satellite')),
+                      PopupMenuItem(
+                          value: MapType.hybrid, child: Text('Hybrid')),
+                    ],
+                    onSelected: (MapType mapType) {
+                      setState(() {
+                        selectedMapType = mapType;
+                      });
+                    },
+                  ),
+                )),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 10,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    spacing: 12,
+                    children: streetEvent.map((e) {
+                      e.pinned = e.id == pinnedPlace.id;
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            pinnedPlace = e;
+                            e.pinned = true;
+                            mapController.animateCamera(
+                                CameraUpdate.newLatLngZoom(e.latLng, 15));
+                          });
+                        },
+                        child: Container(
+                          width: e.pinned ? 150 : 100,
+                          height: e.pinned ? 100 : 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: e.pinned
+                                ? Border.all(
+                                    color: Colors.blue,
+                                    width: 1,
+                                  )
+                                : null,
+                          ),
+                          child: ClipRRect(
+                            // Use ClipRRect to apply borderRadius to the Image widget
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Utility.buildImage(
+                                e.imageUrl), // Use a helper method
+                          ),
                         ),
-                        child: Image.asset(
-                          e.imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

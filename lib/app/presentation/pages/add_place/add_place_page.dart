@@ -11,6 +11,7 @@ import 'package:mobile_tol_guard/app/presentation/pages/add_place/add_location_m
 import 'package:mobile_tol_guard/app/presentation/pages/maps/maps_page.dart';
 import 'package:mobile_tol_guard/app/presentation/widgets/base_page.dart';
 import 'package:mobile_tol_guard/core/services/injection.dart';
+import 'package:mobile_tol_guard/core/static_data/static_data.dart';
 import 'package:mobile_tol_guard/core/util/app_theme.dart';
 import 'package:mobile_tol_guard/core/util/navigation.dart';
 
@@ -62,11 +63,16 @@ class _AddPlacePageState extends State<AddPlacePage> {
                   setState(() {
                     isUploading = false;
                   });
-                  navigateOff(MapsPage(
+                  getIt<AddPlaceCubit>().reset();
+                  navigatePop(true);
+                  navigateTo(MapsPage(
                     firstPlace: MapItemData(
-                        id: 99,
-                        latLng: LatLng(lat ?? 0.0, lon ?? 0.0),
-                        imageUrl: imagePath ?? ''),
+                      id: StaticData.streetEvent.length + 1, // temporary
+                      latLng: LatLng(lat ?? 0.0, lon ?? 0.0),
+                      imageUrl: imagePath ?? '',
+                      name: _descController.text, // temporary
+                      description: _descController.text,
+                    ),
                   ));
                 });
               },
