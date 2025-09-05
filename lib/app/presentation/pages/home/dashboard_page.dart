@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_tol_guard/app/domain/entities/constant.dart';
+import 'package:mobile_tol_guard/app/presentation/pages/add_place/add_place_page.dart';
 import 'package:mobile_tol_guard/app/presentation/pages/maps/maps_page.dart';
 import 'package:mobile_tol_guard/app/presentation/widgets/base_page.dart';
 import 'package:mobile_tol_guard/core/static_data/static_data.dart';
@@ -31,6 +32,8 @@ class _DashboardPageState extends State<DashboardPage> {
       title: Constant.appName,
       body: body(),
       padding: EdgeInsets.all(24),
+      floatingActionButton: floatingActionButton(),
+      hideBackButton: true,
     );
   }
 
@@ -92,6 +95,13 @@ class _DashboardPageState extends State<DashboardPage> {
           );
         }).toList(),
       ),
+    );
+  }
+
+  Widget floatingActionButton() {
+    return FloatingActionButton(
+      onPressed: () => navigateTo(AddPlacePage()),
+      child: Icon(Icons.add),
     );
   }
 }

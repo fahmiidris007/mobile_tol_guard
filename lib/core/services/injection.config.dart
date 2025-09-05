@@ -19,6 +19,10 @@ import 'package:mobile_tol_guard/app/domain/entities/global.dart' as _i605;
 import 'package:mobile_tol_guard/app/domain/repositories/auth_repository.dart'
     as _i39;
 import 'package:mobile_tol_guard/app/domain/use_cases/auth/login.dart' as _i83;
+import 'package:mobile_tol_guard/app/presentation/cubit/add_place/add_place_cubit.dart'
+    as _i860;
+import 'package:mobile_tol_guard/app/presentation/cubit/auth/auth_cubit.dart'
+    as _i475;
 import 'package:mobile_tol_guard/core/helper/api_helper.dart' as _i905;
 import 'package:mobile_tol_guard/core/services/api_service.dart' as _i40;
 
@@ -36,8 +40,10 @@ _i174.GetIt init(
   gh.lazySingleton<_i905.ApiHelper>(() => _i905.ApiHelper());
   gh.lazySingleton<_i40.ApiService>(() => _i40.ApiService());
   gh.lazySingleton<_i605.Global>(() => _i605.Global());
+  gh.lazySingleton<_i860.AddPlaceCubit>(() => _i860.AddPlaceCubit());
   gh.lazySingleton<_i713.AuthDataSource>(() => _i713.AuthDataSourceImpl());
   gh.lazySingleton<_i39.AuthRepository>(() => _i366.AuthRepositoryImpl());
   gh.lazySingleton<_i83.Login>(() => _i83.Login(gh<_i39.AuthRepository>()));
+  gh.lazySingleton<_i475.AuthCubit>(() => _i475.AuthCubit(gh<_i83.Login>()));
   return getIt;
 }

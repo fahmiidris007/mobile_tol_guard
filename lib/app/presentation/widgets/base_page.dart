@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_tol_guard/app/presentation/pages/home/home_page.dart';
 import 'package:mobile_tol_guard/core/util/app_theme.dart';
-import 'package:mobile_tol_guard/core/util/assets.dart';
 import 'package:mobile_tol_guard/core/util/layer_size.dart';
-import 'package:mobile_tol_guard/core/util/navigation.dart';
 import 'package:mobile_tol_guard/core/util/spacing.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -29,6 +26,7 @@ class BasePage extends StatefulWidget {
   final bool progressPage;
   final int totalProgressPage;
   final int currentProgressPage;
+  final Widget? floatingActionButton;
 
   const BasePage({
     super.key,
@@ -52,6 +50,7 @@ class BasePage extends StatefulWidget {
     this.progressPage = false,
     this.totalProgressPage = 1,
     this.currentProgressPage = 1,
+    this.floatingActionButton,
   });
 
   @override
@@ -76,6 +75,7 @@ class _BasePageState extends State<BasePage> {
         resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
         appBar: widget.appBarHide ? null : _appBar(),
         body: _body(),
+        floatingActionButton: widget.floatingActionButton,
       ),
     );
   }
@@ -91,7 +91,10 @@ class _BasePageState extends State<BasePage> {
             IconButton(
               padding: const EdgeInsets.all(0),
               onPressed: widget.backNavigation ?? () => Get.back(),
-              icon: const Icon(Icons.arrow_back_ios),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: AppTheme.black,
+              ),
             ),
           if (widget.appbarLeading != null) widget.appbarLeading!,
         ],

@@ -45,3 +45,6 @@ app.*.map.json
 # web
 web/
 .vscode/templates
+
+# FVM Version Cache
+.fvm/

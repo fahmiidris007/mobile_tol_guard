@@ -49,6 +49,11 @@ class _MapsPageState extends State<MapsPage> {
             id: 9, latLng: LatLng(-6.2000145, 106.4487782), imageUrl: '');
     streetEvent = StaticData.streetEvent;
     setMarkers();
+    // temporary if add steerEvent from add place page
+    if (widget.firstPlace?.imageUrl != null &&
+        widget.firstPlace!.imageUrl.isNotEmpty) {
+      streetEvent.insert(0, widget.firstPlace!);
+    }
   }
 
   setMarkers() {
