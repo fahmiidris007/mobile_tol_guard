@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:mobile_tol_guard/app/data/models/auth/login_model.dart';
 import 'package:mobile_tol_guard/app/domain/use_cases/auth/login.dart';
@@ -8,6 +9,7 @@ import 'package:mobile_tol_guard/core/util/security.dart';
 
 part 'auth_state.dart';
 
+@lazySingleton
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this._login) : super(AuthInitial());
   final Login _login;
